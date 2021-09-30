@@ -1,4 +1,5 @@
 --[=[
+	Collaborators: userofwind
 	https://userofwind.gitbook.io/luxuilibrary/
 ]=]
 
