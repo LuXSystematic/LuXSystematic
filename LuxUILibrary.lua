@@ -19,7 +19,7 @@ local UIFunctions = {}
 local TabFunctions = {}
 local TabData = {}
 local UIIsDragging
-local LocalPlayerMouseKeyDownConnection
+local KeyDownConnection
 local UIInputData
 local OriginalUIPosition
 local SecondOriginalUIPosition
@@ -30,8 +30,8 @@ local SliderValue = 0
 local LastTabFeaturePosition = 0.003
 local LocalPlayerMouse = LocalPlayer:GetMouse()
 
--- Functions
-function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
+-- Library Functions
+function Library:SetupUI(TitleForUI)
 	local LuxUI = Instance.new('ScreenGui')
 	local LuxUIFrame = Instance.new('Frame')
 	local LuxUIFrameUICorner = Instance.new('UICorner')
@@ -173,26 +173,33 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 		end
 	end)
 
-
-	LocalPlayerMouseKeyDownConnection = LocalPlayerMouse.KeyDown:Connect(function (PressedKey)
-		local ReadyToChangePosition = true
-
-		if PressedKey == UIVisibilityHotkey and ReadyToChangePosition then
-			if LuxUIFrame.Position ~= UDim2.new(0.0135716889, 0, 5, 0) then
-				TweenService:Create(LuxUIFrame, TweenInfo.new(1.8), { Position = UDim2.new(0.0135716889, 0, 5, 0) }):Play()
-			else
-				TweenService:Create(LuxUIFrame, TweenInfo.new(1), { Position = UDim2.new(0.0135716889, 0, 0.487272739, 0) }):Play()
-			end
+	function UIFunctions:SetHotkey(KeyToSet)
+		if not KeyToSet then
+			return print('Missing the hotkey to set.')
 		end
 
-		ReadyToChangePosition = false
+		if KeyDownConnection then
+			KeyDownConnection:Disconnect()
+		end
 
-		wait(1)
+		KeyDownConnection = LocalPlayerMouse.KeyDown:Connect(function (PressedKey)
+			local ReadyToChangePosition = true
 
-		ReadyToChangePosition = true
-	end)
+			if PressedKey == KeyToSet and ReadyToChangePosition then
+				if LuxUIFrame.Position ~= UDim2.new(0.0135716889, 0, 5, 0) then
+					TweenService:Create(LuxUIFrame, TweenInfo.new(1), { Position = UDim2.new(0.0135716889, 0, 5, 0) }):Play()
+				else
+					TweenService:Create(LuxUIFrame, TweenInfo.new(1), { Position = UDim2.new(0.0135716889, 0, 0.487272739, 0) }):Play()
+				end
+			end
+		end)
+	end
 
 	function UIFunctions:DestroyUI()
+		if KeyDownConnection then
+			KeyDownConnection:Disconnect()
+		end
+
 		LuxUI:Destroy()
 	end
 
@@ -213,7 +220,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 		CreatedTab.MouseButton1Click:Connect(function ()
 			LastTabFeaturePosition = 0.003
 
-			for Index, Child in pairs(LuxUIFrameHolderFrameScrollingFrame:GetChildren()) do
+			for _, Child in ipairs(LuxUIFrameHolderFrameScrollingFrame:GetChildren()) do
 				pcall(function ()
 					Child.Visible = false
 					Child.Active = false
@@ -222,7 +229,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 				end)
 			end
 
-			for Index, Child in pairs(TabData[TitleForTab]) do
+			for _, Child in ipairs(TabData[TitleForTab]) do
 				pcall(function ()
 					Child.Position = UDim2.new(0.02, 0, LastTabFeaturePosition, 0)
 					Child.Active = true
@@ -251,7 +258,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 		LastTabPosition = LastTabPosition + 0.01
 		TabFunctions = {}
 		TabData[TitleForTab] = {}
-		
+
 		function TabFunctions:CreateButton(TitleForButton, FunctionForButton)
 			local CreatedButton = Instance.new('TextButton')
 			local CreatedButtonUICorner = Instance.new('UICorner')
@@ -431,7 +438,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 					end)
 				end
 			end)
-			
+
 			CreatedSliderLineFrameOrbFrame.InputEnded:Connect(function (InputFromOrb)
 				if InputFromOrb.UserInputType == Enum.UserInputType.MouseButton1 or InputFromOrb.UserInputType == Enum.UserInputType.Touch then
 					coroutine.wrap(SliderReleaseFunction)(math.round(MinimumNumber + (MaximimNumber - MinimumNumber) * CreatedSliderLineFrameOrbFrame.Position.X.Offset/(CreatedSliderLineFrame.Size.X.Offset - 20)))
@@ -445,7 +452,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 			TabData[TitleForTab][#TabData[TitleForTab] + 1] = CreatedSlider
 		end
 
-		function TabFunctions:CreateDropdown(TitleForDropdown, TableOfOptions, OptionChosenFunction)
+		function TabFunctions:CreateDropdown(TitleForDropdown, Values, ValueChosenFunction)
 			local CreatedDropdown = Instance.new('TextButton')
 			local CreatedDropdownUICorner = Instance.new('UICorner')
 			local CreatedDropdownIconLabel = Instance.new('TextLabel')
@@ -462,137 +469,130 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 			CreatedDropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
 			CreatedDropdown.TextSize = 15
 			CreatedDropdown.MouseButton1Click:Connect(function ()
-				if CreatedDropdownIconLabel.Text == '+' then
-					local BeginTweening = false
+				local BeginTweening = false
 
-					for Index, Child in pairs(TabData[TitleForTab]) do
+				if CreatedDropdownIconLabel.Text == '+' then
+					for _, Child in ipairs(TabData[TitleForTab]) do
 						if Child.Text:find(TitleForDropdown) then
 							BeginTweening = true
 
 							continue
 						end
 
-
-						if not Child.Text:find(TitleForDropdown) and BeginTweening then
+						if BeginTweening then
 							Child.Active = false
 
 							TweenService:Create(Child, TweenInfo.new(1), { Transparency = 1 }):Play()
-
-							Child.Visible = false
 						end
 					end
 
-					local DropdownOptionButtonPosition = 0
+					local DropdownButtonPositionToUse = 0
 
-					for Index, Option in pairs(TableOfOptions) do
+					for _, Option in ipairs(Values) do
 						DropdownButtons[#DropdownButtons + 1] = Instance.new('TextButton')
-						local DropdownButton = DropdownButtons[#DropdownButtons]
-						local DropdownButtonScrollingFrame
-						local DropdownButtonUICorner = Instance.new('UICorner')
 
-						if not CreatedDropdown:FindFirstChild('DropdownButtonScrollingFrame') then
-							DropdownButtonScrollingFrame = Instance.new('ScrollingFrame')
+						local CurrentDropdownButton = DropdownButtons[#DropdownButtons]
+						local FrameToUseInstead = CreatedDropdown:FindFirstChild('CurrentDropdownButtonScrollingFrame')
+						local CurrentDropdownButtonUICorner = Instance.new('UICorner')
+						local DropdownPositionToUse = 0
+						
+						print(FrameToUseInstead)
 
-							DropdownButtonScrollingFrame.Name = 'DropdownButtonScrollingFrame'
-							DropdownButtonScrollingFrame.Parent = CreatedDropdown
-							DropdownButtonScrollingFrame.Active = true
-							DropdownButtonScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-							DropdownButtonScrollingFrame.BorderSizePixel = 0
-							DropdownButtonScrollingFrame.Position = UDim2.new(0.014117647, 0, 1.2, 0)
-							DropdownButtonScrollingFrame.Size = UDim2.new(0, 425, 0, 0)
-							DropdownButtonScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 2500)
-							DropdownButtonScrollingFrame.ScrollBarImageTransparency = 1
-							DropdownButtonScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 201, 73)
-							DropdownButtonScrollingFrame.ScrollBarThickness = 5
-							DropdownButtonScrollingFrame.BackgroundTransparency = 1
-						else
-							DropdownButtonScrollingFrame = CreatedDropdown:FindFirstChild('DropdownButtonScrollingFrame')
+						if not FrameToUseInstead then
+							FrameToUseInstead = Instance.new('ScrollingFrame')
+
+							FrameToUseInstead.Name = 'CurrentDropdownButtonScrollingFrame'
+							FrameToUseInstead.Parent = CreatedDropdown
+							FrameToUseInstead.Active = true
+							FrameToUseInstead.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							FrameToUseInstead.BorderSizePixel = 0
+							FrameToUseInstead.Position = UDim2.new(0.014117647, 0, 1.2, 0)
+							FrameToUseInstead.Size = UDim2.new(0, 425, 0, 0)
+							FrameToUseInstead.CanvasSize = UDim2.new(0, 0, 2, 2500)
+							FrameToUseInstead.ScrollBarImageTransparency = 1
+							FrameToUseInstead.ScrollBarImageColor3 = Color3.fromRGB(255, 201, 73)
+							FrameToUseInstead.ScrollBarThickness = 5
+							FrameToUseInstead.BackgroundTransparency = 1
 						end
 
-						DropdownButton.Name = 'CreatedDropdownScrollingFrameOptionButton'
-						DropdownButton.Parent = DropdownButtonScrollingFrame
-						DropdownButton.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-						DropdownButton.Position = UDim2.new(0, 0, DropdownOptionButtonPosition, 0)
-						DropdownButton.Size = UDim2.new(0, 401, 0, 21)
-						DropdownButton.Font = Enum.Font.JosefinSans
-						DropdownButton.Text = Option
-						DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-						DropdownButton.TextSize = 14.000
-						DropdownButton.BackgroundTransparency = 1
-						DropdownButton.MouseButton1Click:Connect(function ()
-							local FrameToTween = CreatedDropdown:FindFirstChild('DropdownButtonScrollingFrame')
-									
+						CurrentDropdownButton.Name = 'CurrentDropdownButton'
+						CurrentDropdownButton.Parent = FrameToUseInstead
+						CurrentDropdownButton.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+						CurrentDropdownButton.Position = UDim2.new(0, 0, DropdownPositionToUse, 0)
+						CurrentDropdownButton.Size = UDim2.new(0, 401, 0, 21)
+						CurrentDropdownButton.Font = Enum.Font.JosefinSans
+						CurrentDropdownButton.Text = Option
+						CurrentDropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+						CurrentDropdownButton.TextSize = 14.000
+						CurrentDropdownButton.BackgroundTransparency = 1
+						CurrentDropdownButton.MouseButton1Click:Connect(function ()
+							BeginTweening = false
 							CreatedDropdown.Text = TitleForDropdown
-							CreatedDropdown.Text = CreatedDropdown.Text .. ' (' .. DropdownButton.Text .. ')'
+							CreatedDropdown.Text = CreatedDropdown.Text .. ' (' .. CurrentDropdownButton.Text .. ')'
 
-							for Index, Child in pairs(DropdownButtons) do
+							for _, Child in ipairs(DropdownButtons) do
 								coroutine.wrap(function ()
 									TweenService:Create(Child, TweenInfo.new(0.2), { Transparency = 1 }):Play()
-									TweenService:Create(FrameToTween, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 0) }):Play()
-									TweenService:Create(FrameToTween, TweenInfo.new(0.2), { ScrollBarImageTransparency = 1 }):Play()
+									TweenService:Create(FrameToUseInstead, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 0) }):Play()
+									TweenService:Create(FrameToUseInstead, TweenInfo.new(0.2), { ScrollBarImageTransparency = 1 }):Play()
 								end)()
 							end
 
-							for Index, Child in pairs(TabData[TitleForTab]) do
-								local PassedOverDropdown = true
 
+							for _, Child in ipairs(TabData[TitleForTab]) do
 								pcall(function ()
-									if Child.Name:find('Dropdown') and Child.Text:find(TitleForDropdown) and PassedOverDropdown then
-										PassedOverDropdown = false
-									else
-										Child.Active = true
-
-										TweenService:Create(Child, TweenInfo.new(1), { Transparency = 0 }):Play()
-
-										Child.Visible = true
+									if Child.Text:find(TitleForDropdown) and not BeginTweening then
+										BeginTweening = true
 									end
+
+									Child.Active = true
+
+									TweenService:Create(Child, TweenInfo.new(1), { Transparency = 0 }):Play()
 								end)
 							end
 
-							coroutine.wrap(OptionChosenFunction)(DropdownButton.Text)
+							coroutine.wrap(ValueChosenFunction)(CurrentDropdownButton.Text)
 
 							CreatedDropdownIconLabel.Text = '+'
 						end)
 
-						DropdownButtonUICorner.Name = 'CreatedDropdownScrollingFrameOptionButton'
-						DropdownButtonUICorner.Parent = DropdownButton
+						CurrentDropdownButtonUICorner.Name = 'CurrentDropdownButtonUICorner'
+						CurrentDropdownButtonUICorner.Parent = CurrentDropdownButton
 
-						DropdownOptionButtonPosition = DropdownOptionButtonPosition + 0.011
+						DropdownPositionToUse = DropdownPositionToUse + 0.011
 
 						pcall(function ()
-							TweenService:Create(DropdownButtonScrollingFrame, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 270) }):Play()
-							TweenService:Create(DropdownButtonScrollingFrame, TweenInfo.new(1), { ScrollBarImageTransparency = 0 }):Play()
+							TweenService:Create(FrameToUseInstead, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 270) }):Play()
+							TweenService:Create(FrameToUseInstead, TweenInfo.new(1), { ScrollBarImageTransparency = 0 }):Play()
 						end)
 
 						coroutine.wrap(function ()
-							TweenService:Create(DropdownButton, TweenInfo.new(1), { Transparency  = 0 }):Play()
+							TweenService:Create(CurrentDropdownButton, TweenInfo.new(1), { Transparency  = 0 }):Play()
 						end)()
 					end
 
 					CreatedDropdownIconLabel.Text = '-'
 				else
-					local FrameToTween = CreatedDropdown:FindFirstChild('DropdownButtonScrollingFrame')
-						
-					for Index, Child in pairs(DropdownButtons) do
+					local FrameToTween = CreatedDropdown:FindFirstChild('CurrentDropdownButtonScrollingFrame')
+
+					for _, Child in ipairs(DropdownButtons) do
 						coroutine.wrap(function ()
 							TweenService:Create(Child, TweenInfo.new(0.2), { Transparency = 1 }):Play()
 							TweenService:Create(FrameToTween, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 0) }):Play()
 							TweenService:Create(FrameToTween, TweenInfo.new(0.2), { ScrollBarImageTransparency = 1 }):Play()
 						end)()
 					end
-						
-					local PassedOverDropdown = true
-
-					for Index, Child in pairs(TabData[TitleForTab]) do
+					
+					BeginTweening = false
+					
+					for _, Child in ipairs(TabData[TitleForTab]) do
 						pcall(function ()
-							if Child.Name:find('Dropdown') and Child.Text:find(TitleForDropdown) and PassedOverDropdown then
-								PassedOverDropdown = false
+							if Child.Text:find(TitleForDropdown) and not BeginTweening then
+								BeginTweening = false
 							else
 								Child.Active = true
 
 								TweenService:Create(Child, TweenInfo.new(1), { Transparency = 0 }):Play()
-
-								Child.Visible = true
 							end
 						end)
 					end
@@ -622,23 +622,23 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 		end
 
 		function TabFunctions:CreateBox(TitleForBox, FunctionForBox)
-			local CreatedBox = Instance.new("Frame")
-			local CreatedBoxUICorner = Instance.new("UICorner")
-			local CreatedBoxTitleLabel = Instance.new("TextLabel")
-			local CreatedBoxInputBox = Instance.new("TextBox")
-			local CreatedBoxInputBoxUICorner = Instance.new("UICorner")
+			local CreatedBox = Instance.new('Frame')
+			local CreatedBoxUICorner = Instance.new('UICorner')
+			local CreatedBoxTitleLabel = Instance.new('TextLabel')
+			local CreatedBoxInputBox = Instance.new('TextBox')
+			local CreatedBoxInputBoxUICorner = Instance.new('UICorner')
 
-			CreatedBox.Name = "CreatedBox"
+			CreatedBox.Name = 'CreatedBox'
 			CreatedBox.Parent = LuxUIFrameHolderFrameScrollingFrame
 			CreatedBox.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
 			CreatedBox.Position = UDim2.new(0.0199999996, 0, 0.00300000003, 0)
 			CreatedBox.Size = UDim2.new(0, 425, 0, 60)
 			CreatedBox.Visible = false
 
-			CreatedBoxUICorner.Name = "CreatedBoxUICorner"
+			CreatedBoxUICorner.Name = 'CreatedBoxUICorner'
 			CreatedBoxUICorner.Parent = CreatedBox
 
-			CreatedBoxTitleLabel.Name = "CreatedBoxTitleLabel"
+			CreatedBoxTitleLabel.Name = 'CreatedBoxTitleLabel'
 			CreatedBoxTitleLabel.Parent = CreatedBox
 			CreatedBoxTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			CreatedBoxTitleLabel.BackgroundTransparency = 1.000
@@ -648,7 +648,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 			CreatedBoxTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 			CreatedBoxTitleLabel.TextSize = 20.000
 
-			CreatedBoxInputBox.Name = "CreatedBoxInputBox"
+			CreatedBoxInputBox.Name = 'CreatedBoxInputBox'
 			CreatedBoxInputBox.Parent = CreatedBox
 			CreatedBoxInputBox.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
 			CreatedBoxInputBox.Position = UDim2.new(0.014117647, 0, 0.5, 0)
@@ -665,7 +665,7 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 				end
 			end)
 
-			CreatedBoxInputBoxUICorner.Name = "CreatedBoxInputBoxUICorner"
+			CreatedBoxInputBoxUICorner.Name = 'CreatedBoxInputBoxUICorner'
 			CreatedBoxInputBoxUICorner.Parent = CreatedBoxInputBox
 
 			TabData[TitleForTab][#TabData[TitleForTab] + 1] = CreatedBox
@@ -676,6 +676,6 @@ function Library:SetupUI(TitleForUI, UIVisibilityHotkey)
 
 	return UIFunctions
 end
-            
+
 -- Export
 return Library
