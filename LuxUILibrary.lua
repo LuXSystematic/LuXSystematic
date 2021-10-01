@@ -304,7 +304,7 @@ function Library:SetupUI(TitleForUI)
 			TabData[TitleForTab][#TabData[TitleForTab] + 1] = CreatedLabel
 		end
 
-		function TabFunctions:CreateToggle(TitleForToggle, StartFunction, FinishFunction)
+		function TabFunctions:CreateToggle(TitleForToggle, FunctionForToggle)
 			local CreatedToggle = Instance.new('TextButton')
 			local CreatedToggleUICorner = Instance.new('UICorner')
 			local CreatedToggleIconLabel = Instance.new('TextLabel')
@@ -324,15 +324,13 @@ function Library:SetupUI(TitleForUI)
 				if CreatedToggleIconLabel.Text == 'OFF' then
 					CreatedToggleIconLabel.BackgroundColor3 = Color3.fromRGB(30, 255, 120)
 
-					coroutine.wrap(StartFunction)()
+					coroutine.wrap(FunctionForToggle)('ON')
 
 					CreatedToggleIconLabel.Text = 'ON'
 				else
 					CreatedToggleIconLabel.BackgroundColor3 = Color3.fromRGB(255, 7, 85)
 
-					if FinishFunction then
-						coroutine.wrap(FinishFunction)()
-					end
+					coroutine.wrap(FunctionForToggle)('OFF')
 
 					CreatedToggleIconLabel.Text = 'OFF'
 				end
