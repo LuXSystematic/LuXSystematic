@@ -34,27 +34,3 @@ BoostsTab:CreateButton(
     end
 )
 
-BoostsTab:CreateToggle(
-    'Auto Farm',
-    function ()
-        AutoFarmingBoosts = true
-        
-        local CurrentWorld = LocalPlayer['PlayerGui']:FindFirstChild('ScreenGui'):FindFirstChild('Menu_Frame'):FindFirstChild('MapTeleportation_Frame'):FindFirstChild('MapLvl_Txt').Text:split(' ')[2]
-
-        while AutoFarmingBoosts do
-            wait()
-            
-            local DiscoveredChild = WorkspaceService['Map']['Stages']['Boosts'][CurrentWorld]:GetDescendants()[1]:GetChildren()
-            
-            if DiscoveredChild.ClassName == 'TouchTransmitter' then
-                firetouchinterest(LocalPlayerCharacter.HumanoidRootPart, DiscoveredChild.Parent, 0)
-                firetouchinterest(LocalPlayerCharacter.HumanoidRootPart, DiscoveredChild.Parent, 1)
-            
-                wait(0.2)
-            end
-        end
-    end,
-    function ()
-        AutoFarmingBoosts = false
-    end
-)
