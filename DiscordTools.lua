@@ -1,3 +1,8 @@
+--[=[
+	Collaborators: userofwind
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/userofwind/LuxInc/master/DiscordTools.lua'))()
+]=]
+
 -- UI Setup
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/userofwind/LuxInc/master/LuxUILibrary.lua'))()
 local UI = Library:SetupUI('Discord Tools')
