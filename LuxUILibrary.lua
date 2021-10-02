@@ -38,7 +38,7 @@ function Library:SetupUI(TitleForUI)
 	local LuxUIFrameHeaderFrame = Instance.new('Frame')
 	local LuxUIFrameHeaderFrameUICorner = Instance.new('UICorner')
 	local LuxUIFrameHeaderFrameTitleLabel = Instance.new('TextLabel')
-	local LuxUIFrameHeaderFrameLuxButton = Instance.new('ImageButton')
+	local LuxUIFrameHeaderFrameLuxIcon = Instance.new('ImageLabel')
 	local LuxUIFrameHolderFrame = Instance.new('Frame')
 	local LuxUIFrameHolderFrameUICorner = Instance.new('UICorner')
 	local LuxUIFrameHolderFrameScrollingFrame = Instance.new('ScrollingFrame')
@@ -82,13 +82,13 @@ function Library:SetupUI(TitleForUI)
 	LuxUIFrameHeaderFrameTitleLabel.TextSize = 20.000
 	LuxUIFrameHeaderFrameTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-	LuxUIFrameHeaderFrameLuxButton.Name = 'LuxUIFrameHeaderFrameLuxButton'
-	LuxUIFrameHeaderFrameLuxButton.Parent = LuxUIFrameHeaderFrame
-	LuxUIFrameHeaderFrameLuxButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	LuxUIFrameHeaderFrameLuxButton.BackgroundTransparency = 1.000
-	LuxUIFrameHeaderFrameLuxButton.Position = UDim2.new(0.020202022, 0, 0.205882356, 0)
-	LuxUIFrameHeaderFrameLuxButton.Size = UDim2.new(0, 22, 0, 20)
-	LuxUIFrameHeaderFrameLuxButton.Image = 'http://www.roblox.com/asset/?id=5012126105'
+	LuxUIFrameHeaderFrameLuxIcon.Name = 'LuxUIFrameHeaderFrameLuxIcon'
+	LuxUIFrameHeaderFrameLuxIcon.Parent = LuxUIFrameHeaderFrame
+	LuxUIFrameHeaderFrameLuxIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LuxUIFrameHeaderFrameLuxIcon.BackgroundTransparency = 1.000
+	LuxUIFrameHeaderFrameLuxIcon.Position = UDim2.new(0.020202022, 0, 0.205882356, 0)
+	LuxUIFrameHeaderFrameLuxIcon.Size = UDim2.new(0, 22, 0, 20)
+	LuxUIFrameHeaderFrameLuxIcon.Image = 'http://www.roblox.com/asset/?id=5012126105'
 
 	LuxUIFrameHolderFrame.Name = 'LuxUIFrameHolderFrame'
 	LuxUIFrameHolderFrame.Parent = LuxUIFrame
@@ -193,6 +193,93 @@ function Library:SetupUI(TitleForUI)
 				end
 			end
 		end)
+	end
+	
+	function UIFunctions:Notify(TitleForNotification)
+	    local CreatedNotification = Instance.new('ScreenGui')
+		local CreatedNotificationFrame = Instance.new("Frame")
+		local CreatedNotificationFrameHeaderFrame = Instance.new("Frame")
+		local CreatedNotificationFrameHeaderFrameUICorner = Instance.new("UICorner")
+		local CreatedNotificationFrameHeaderFrameLuxIcon = Instance.new("ImageButton")
+		local CreatedNotificationFrameHeaderFrameTitleLabel = Instance.new("TextLabel")
+		local CreatedNotificationFrameUICorner = Instance.new("UICorner")
+		local CreatedNotificationFrameDescriptionFrame = Instance.new("Frame")
+		local CreatedNotificationFrameDescriptionFrameUICorner = Instance.new("UICorner")
+		local CreatedNotificationFrameDescriptionFrameTextLabel = Instance.new("TextLabel")
+
+        CreatedNotification.Name = 'CreatedNotification'
+        CreatedNotification.Parent = game.CoreGui
+        CreatedNotification.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        
+		CreatedNotificationFrame.Name = "CreatedNotificationFrame"
+		CreatedNotificationFrame.Parent = CreatedNotification
+		CreatedNotificationFrame.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+		CreatedNotificationFrame.Position = UDim2.new(1.1, 0, 0.517575741, 0)
+		CreatedNotificationFrame.Size = UDim2.new(0, 256, 0, 386)
+
+		CreatedNotificationFrameHeaderFrame.Name = "CreatedNotificationFrameHeaderFrame"
+		CreatedNotificationFrameHeaderFrame.Parent = CreatedNotificationFrame
+		CreatedNotificationFrameHeaderFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+		CreatedNotificationFrameHeaderFrame.Size = UDim2.new(0, 256, 0, 34)
+
+		CreatedNotificationFrameHeaderFrameUICorner.Name = "CreatedNotificationFrameHeaderFrameUICorner"
+		CreatedNotificationFrameHeaderFrameUICorner.Parent = CreatedNotificationFrameHeaderFrame
+
+		CreatedNotificationFrameHeaderFrameLuxIcon.Name = "CreatedNotificationFrameHeaderFrameLuxIcon"
+		CreatedNotificationFrameHeaderFrameLuxIcon.Parent = CreatedNotificationFrameHeaderFrame
+		CreatedNotificationFrameHeaderFrameLuxIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		CreatedNotificationFrameHeaderFrameLuxIcon.BackgroundTransparency = 1.000
+		CreatedNotificationFrameHeaderFrameLuxIcon.Position = UDim2.new(0.0553582683, 0, 0.176470593, 0)
+		CreatedNotificationFrameHeaderFrameLuxIcon.Size = UDim2.new(0, 22, 0, 21)
+		CreatedNotificationFrameHeaderFrameLuxIcon.Image = "http://www.roblox.com/asset/?id=5012126105"
+
+		CreatedNotificationFrameHeaderFrameTitleLabel.Name = "CreatedNotificationFrameHeaderFrameTitleLabel"
+		CreatedNotificationFrameHeaderFrameTitleLabel.Parent = CreatedNotificationFrameHeaderFrame
+		CreatedNotificationFrameHeaderFrameTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		CreatedNotificationFrameHeaderFrameTitleLabel.BackgroundTransparency = 1.000
+		CreatedNotificationFrameHeaderFrameTitleLabel.Position = UDim2.new(0.192076683, 0, 0, 0)
+		CreatedNotificationFrameHeaderFrameTitleLabel.Size = UDim2.new(0, 191, 0, 34)
+		CreatedNotificationFrameHeaderFrameTitleLabel.Font = Enum.Font.JosefinSans
+		CreatedNotificationFrameHeaderFrameTitleLabel.Text = "Notification"
+		CreatedNotificationFrameHeaderFrameTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		CreatedNotificationFrameHeaderFrameTitleLabel.TextSize = 23.000
+		CreatedNotificationFrameHeaderFrameTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+		CreatedNotificationFrameUICorner.Name = "CreatedNotificationFrameUICorner"
+		CreatedNotificationFrameUICorner.Parent = CreatedNotificationFrame
+
+		CreatedNotificationFrameDescriptionFrame.Name = "CreatedNotificationFrameDescriptionFrame"
+		CreatedNotificationFrameDescriptionFrame.Parent = CreatedNotificationFrame
+		CreatedNotificationFrameDescriptionFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+		CreatedNotificationFrameDescriptionFrame.Position = UDim2.new(0.0234375, 0, 0.103626944, 0)
+		CreatedNotificationFrameDescriptionFrame.Size = UDim2.new(0, 244, 0, 340)
+
+		CreatedNotificationFrameDescriptionFrameUICorner.Name = "CreatedNotificationFrameDescriptionFrameUICorner"
+		CreatedNotificationFrameDescriptionFrameUICorner.Parent = CreatedNotificationFrameDescriptionFrame
+
+		CreatedNotificationFrameDescriptionFrameTextLabel.Name = "CreatedNotificationFrameDescriptionFrameTextLabel"
+		CreatedNotificationFrameDescriptionFrameTextLabel.Parent = CreatedNotificationFrameDescriptionFrame
+		CreatedNotificationFrameDescriptionFrameTextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		CreatedNotificationFrameDescriptionFrameTextLabel.BackgroundTransparency = 1.000
+		CreatedNotificationFrameDescriptionFrameTextLabel.Position = UDim2.new(0.033490289, 0, 0.0176764987, 0)
+		CreatedNotificationFrameDescriptionFrameTextLabel.Size = UDim2.new(0, 226, 0, 327)
+		CreatedNotificationFrameDescriptionFrameTextLabel.Font = Enum.Font.JosefinSans
+		CreatedNotificationFrameDescriptionFrameTextLabel.Text = TitleForNotification
+		CreatedNotificationFrameDescriptionFrameTextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		CreatedNotificationFrameDescriptionFrameTextLabel.TextSize = 17.000
+		CreatedNotificationFrameDescriptionFrameTextLabel.TextWrapped = true
+		CreatedNotificationFrameDescriptionFrameTextLabel.TextXAlignment = Enum.TextXAlignment.Left
+		CreatedNotificationFrameDescriptionFrameTextLabel.TextYAlignment = Enum.TextYAlignment.Top
+		
+		TweenService:Create(CreatedNotificationFrame, TweenInfo.new(1), { Position = UDim2.new(0.851, 0, 0.518, 0) }):Play()
+		
+		wait(5)
+		
+		TweenService:Create(CreatedNotificationFrame, TweenInfo.new(1), { Position = UDim2.new(1.1, 0, 0.518) }):Play()
+		
+		wait(1)
+		
+		CreatedNotificationFrame:Destroy()
 	end
 
 	function UIFunctions:DestroyUI()
