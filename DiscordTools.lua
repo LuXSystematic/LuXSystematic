@@ -30,6 +30,7 @@ WebhookRaiderTab:CreateBox(
 	'Webhook URL',
 	function (Value)
 		Request.Url = Value
+		getgenv().webhook = Value
 	end
 )
 
@@ -48,6 +49,14 @@ WebhookRaiderTab:CreateSlider(
 		MsgAmount = Value
 	end
 )
+
+WebhookRaiderTab:CreateButton("Delte - Webhook", function()
+    syn.request({
+        Url = getgenv().webhook,
+        Method = "DELETE"
+    })
+end)
+
 
 WebhookRaiderTab:CreateButton(
 	'Send Raid',
