@@ -578,9 +578,7 @@ function Library:SetupUI(TitleForUI)
 						local FrameToUseInstead = CreatedDropdown:FindFirstChild('CurrentDropdownButtonScrollingFrame')
 						local CurrentDropdownButtonUICorner = Instance.new('UICorner')
 						local DropdownPositionToUse = 0
-						
-						print(FrameToUseInstead)
-
+			
 						if not FrameToUseInstead then
 							FrameToUseInstead = Instance.new('ScrollingFrame')
 
@@ -597,11 +595,11 @@ function Library:SetupUI(TitleForUI)
 							FrameToUseInstead.ScrollBarThickness = 5
 							FrameToUseInstead.BackgroundTransparency = 1
 						end
-
+				
 						CurrentDropdownButton.Name = 'CurrentDropdownButton'
 						CurrentDropdownButton.Parent = FrameToUseInstead
 						CurrentDropdownButton.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-						CurrentDropdownButton.Position = UDim2.new(0, 0, DropdownPositionToUse, 0)
+						CurrentDropdownButton.Position = UDim2.new(0, 0, DropdownButtonPositionToUse, 0)
 						CurrentDropdownButton.Size = UDim2.new(0, 401, 0, 21)
 						CurrentDropdownButton.Font = Enum.Font.JosefinSans
 						CurrentDropdownButton.Text = Option
@@ -642,7 +640,7 @@ function Library:SetupUI(TitleForUI)
 						CurrentDropdownButtonUICorner.Name = 'CurrentDropdownButtonUICorner'
 						CurrentDropdownButtonUICorner.Parent = CurrentDropdownButton
 
-						DropdownPositionToUse = DropdownPositionToUse + 0.011
+						DropdownButtonPositionToUse = DropdownButtonPositionToUse + 0.009
 
 						pcall(function ()
 							TweenService:Create(FrameToUseInstead, TweenInfo.new(1), { Size = UDim2.new(0, 425, 0, 270) }):Play()
