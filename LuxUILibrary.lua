@@ -197,7 +197,7 @@ function Library:SetupUI(TitleForUI)
 		end)
 	end
 	
-	function UIFunctions:Notify(TitleForNotification)
+	function UIFunctions:Notify(TitleForNotification, TimeForNotification)
 	    local CreatedNotification = Instance.new('ScreenGui')
 		local CreatedNotificationFrame = Instance.new("Frame")
 		local CreatedNotificationFrameHeaderFrame = Instance.new("Frame")
@@ -209,9 +209,9 @@ function Library:SetupUI(TitleForUI)
 		local CreatedNotificationFrameDescriptionFrameUICorner = Instance.new("UICorner")
 		local CreatedNotificationFrameDescriptionFrameTextLabel = Instance.new("TextLabel")
 
-        CreatedNotification.Name = 'CreatedNotification'
-        CreatedNotification.Parent = game.CoreGui
-        CreatedNotification.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        	CreatedNotification.Name = 'CreatedNotification'
+        	CreatedNotification.Parent = game.CoreGui
+        	CreatedNotification.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
         
 		CreatedNotificationFrame.Name = "CreatedNotificationFrame"
 		CreatedNotificationFrame.Parent = CreatedNotification
@@ -273,7 +273,7 @@ function Library:SetupUI(TitleForUI)
 		CreatedNotificationFrameDescriptionFrameTextLabel.TextXAlignment = Enum.TextXAlignment.Left
 		CreatedNotificationFrameDescriptionFrameTextLabel.TextYAlignment = Enum.TextYAlignment.Top
 		
-		TweenService:Create(CreatedNotificationFrame, TweenInfo.new(1), { Position = UDim2.new(0.851, 0, 0.518, 0) }):Play()
+		TweenService:Create(CreatedNotificationFrame, TweenInfo.new(TimeForNotification or 1), { Position = UDim2.new(0.851, 0, 0.518, 0) }):Play()
 		
 		wait(5)
 		
