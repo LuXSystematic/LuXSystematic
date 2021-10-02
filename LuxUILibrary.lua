@@ -6,7 +6,9 @@
 if game.CoreGui:FindFirstChild('LuxUI') then
 	game.CoreGui:FindFirstChild('LuxUI'):Destroy()
 	
-	game.CoreGui:FindFirstChild('CreatedNotification'):Destroy()
+	if game.CoreGui:FindFirstChild('CreatedNotification') then
+		game.CoreGui:FindFirstChild('CreatedNotification'):Destroy()
+	end
 end
 
 -- Services
@@ -176,10 +178,6 @@ function Library:SetupUI(TitleForUI)
 	end)
 
 	function UIFunctions:SetHotkey(KeyToSet)
-		if not KeyToSet then
-			return print('Missing the hotkey to set.')
-		end
-
 		if KeyDownConnection then
 			KeyDownConnection:Disconnect()
 		end
