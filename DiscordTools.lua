@@ -1,5 +1,5 @@
 --[=[
-	Collaborators: userofwind
+	Collaborators: userofwind , LeadMarker
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/LuXSystematic/RobloxScripts/master/DiscordTools.lua'))()
 ]=]
 
