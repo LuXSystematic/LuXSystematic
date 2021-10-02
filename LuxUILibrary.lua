@@ -5,6 +5,8 @@
 
 if game.CoreGui:FindFirstChild('LuxUI') then
 	game.CoreGui:FindFirstChild('LuxUI'):Destroy()
+	
+	game.CoreGui:FindFirstChild('CreatedNotification'):Destroy()
 end
 
 -- Services
