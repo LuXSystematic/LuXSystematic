@@ -143,7 +143,7 @@ function Library:SetupUI(TitleForUI)
 	LuxUIFrameTabsFrameCreditsLabel.Position = UDim2.new(0.0472440943, 0, 0.870129883, 0)
 	LuxUIFrameTabsFrameCreditsLabel.Size = UDim2.new(0, 115, 0, 50)
 	LuxUIFrameTabsFrameCreditsLabel.Font = Enum.Font.JosefinSans
-	LuxUIFrameTabsFrameCreditsLabel.Text = 'LuXSystematic UI Library'
+	LuxUIFrameTabsFrameCreditsLabel.Text = 'LuXSystematic\nUI Library'
 	LuxUIFrameTabsFrameCreditsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	LuxUIFrameTabsFrameCreditsLabel.TextSize = 15.000
 	LuxUIFrameTabsFrameCreditsLabel.TextWrapped = true
