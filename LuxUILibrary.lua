@@ -322,16 +322,14 @@ function Library:SetupUI(TitleForUI)
 			CreatedToggle.TextSize = 15
 			CreatedToggle.MouseButton1Click:Connect(function ()
 				if CreatedToggleIconLabel.Text == 'OFF' then
+					coroutine.wrap(FunctionForToggle)(true)
+						
 					CreatedToggleIconLabel.BackgroundColor3 = Color3.fromRGB(30, 255, 120)
-
-					coroutine.wrap(FunctionForToggle)('ON')
-
 					CreatedToggleIconLabel.Text = 'ON'
 				else
+					coroutine.wrap(FunctionForToggle)(false)
+						
 					CreatedToggleIconLabel.BackgroundColor3 = Color3.fromRGB(255, 7, 85)
-
-					coroutine.wrap(FunctionForToggle)('OFF')
-
 					CreatedToggleIconLabel.Text = 'OFF'
 				end
 			end)
