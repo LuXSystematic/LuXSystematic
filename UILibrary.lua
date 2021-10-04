@@ -276,6 +276,13 @@ function Library:SetupUI(title)
 		CreatedTabUILayout.Padding = UDim.new(0, 5)
 
 		CreatedTab.MouseButton1Click:Connect(function()
+		    for _, Child in ipairs(UITabScroll:GetChildren()) do
+		        if Child.Name == 'CreatedTab' then
+		            TweenService:Create(Child, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+			        TweenService:Create(Child, TweenInfo.new(.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.new(0, 0, 0)}):Play()
+		        end
+		    end
+		    
 			for _, Child in ipairs(UIPageHolder:GetChildren()) do
 			    if Child:IsA('ScrollingFrame') then
 				    Child.Visible = false 
