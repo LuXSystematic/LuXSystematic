@@ -278,8 +278,8 @@ function Library:SetupUI(title)
 		CreatedTab.MouseButton1Click:Connect(function()
 		    for _, Child in ipairs(UITabScroll:GetChildren()) do
 		        if Child.Name == 'CreatedTab' then
-		            TweenService:Create(Child, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
-			        TweenService:Create(Child, TweenInfo.new(.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.new(0, 0, 0)}):Play()
+		            TweenService:Create(Child, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+			        TweenService:Create(Child, TweenInfo.new(.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 0, 127)}):Play()
 		        end
 		    end
 		    
