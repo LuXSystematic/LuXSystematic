@@ -689,7 +689,7 @@ function Library:SetupUI(title)
 					DropInnerFrame:TweenSize(UDim2.new(0, 385, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.1, true)
 					TweenService:Create(DropImageLabel, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),{Rotation = 0}):Play()
 					repeat
-						task.task.wait()
+						task.wait()
 					until DropFrame.Size == UDim2.new(0, 393, 0, 0)
 					DropFrame.Visible = false 
 					CreatedTabPage.CanvasSize = UDim2.new(0, 0, 0,CreatedTabUILayout.AbsoluteContentSize.Y)
