@@ -106,7 +106,7 @@ end
 local bruh = Color3.fromRGB(255, 0, 127)
 -- Library Functions
 function Library:SetupUI(title,Bruh)
-	bruh = Bruh
+	bruh = Bruh or bruh
 	local UI = Instance.new('ScreenGui')
 	local UICarrier = Instance.new('Frame')
 	local UICarrierShape = Instance.new('UICorner')
