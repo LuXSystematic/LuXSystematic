@@ -103,8 +103,10 @@ local function AddDraggability(HigherUIObject, UIObject)
     end)
 end
 
+local bruh = Color3.fromRGB(255, 0, 127)
 -- Library Functions
-function Library:SetupUI(title)
+function Library:SetupUI(title,Bruh)
+	bruh = Bruh
 	local UI = Instance.new('ScreenGui')
 	local UICarrier = Instance.new('Frame')
 	local UICarrierShape = Instance.new('UICorner')
@@ -207,7 +209,7 @@ function Library:SetupUI(title)
 	UITitle.Size = UDim2.new(0, 200, 0, 18)
 	UITitle.Font = Enum.Font.Gotham
 	UITitle.Text = title or 'Title'
-	UITitle.TextColor3 = Color3.fromRGB(255, 0, 127)
+	UITitle.TextColor3 = bruh
 	UITitle.TextSize = 24.000
 	UITitle.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -244,13 +246,13 @@ function Library:SetupUI(title)
 
 		CreatedTab.Name = 'CreatedTab'
 		CreatedTab.Parent = UITabScroll
-		CreatedTab.BackgroundColor3 = Color3.fromRGB(255, 0, 127)
+		CreatedTab.BackgroundColor3 = bruh
 		CreatedTab.BackgroundTransparency = 1
 		CreatedTab.Position = UDim2.new(1.71241832, 0, -0.130368099, 0)
 		CreatedTab.Size = UDim2.new(0, 137, 0, 30)
 		CreatedTab.AutoButtonColor = false
 		CreatedTab.Font = Enum.Font.Gotham
-		CreatedTab.TextColor3 = Color3.fromRGB(255, 0, 127)
+		CreatedTab.TextColor3 = bruh
 		CreatedTab.TextSize = 14.000
 		CreatedTab.Text = TabTitle or 'New Tab'
 	
@@ -279,7 +281,7 @@ function Library:SetupUI(title)
 		    for _, Child in ipairs(UITabScroll:GetChildren()) do
 		        if Child.Name == 'CreatedTab' then
 		            TweenService:Create(Child, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
-			        TweenService:Create(Child, TweenInfo.new(.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 0, 127)}):Play()
+			        TweenService:Create(Child, TweenInfo.new(.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = bruh}):Play()
 		        end
 		    end
 		    
@@ -319,7 +321,7 @@ function Library:SetupUI(title)
 			CreatedButton.Size = UDim2.new(0, 393, 0, 30)
 			CreatedButton.AutoButtonColor = false
 			CreatedButton.Font = Enum.Font.Gotham
-			CreatedButton.TextColor3 = Color3.fromRGB(255, 0, 127)
+			CreatedButton.TextColor3 = bruh
 			CreatedButton.TextSize = 17.000
 			CreatedButton.Text = ButtonTitle or 'Button'
 			CreatedButton.ClipsDescendants = true
@@ -364,7 +366,7 @@ function Library:SetupUI(title)
 			CreatedToggle.AutoButtonColor = false
 			CreatedToggle.Font = Enum.Font.Gotham
 			CreatedToggle.Text = ToggleTitle or 'Toggle'
-			CreatedToggle.TextColor3 = Color3.fromRGB(255, 0, 127)
+			CreatedToggle.TextColor3 = bruh
 			CreatedToggle.TextSize = 17.000
 			CreatedToggle.ClipsDescendants = true
 			
@@ -395,7 +397,7 @@ function Library:SetupUI(title)
 				if not Toggled then
 					Toggled = not Toggled
 
-					TweenService:Create(CreatedToggleInside, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(255, 0, 127)}):Play()
+					TweenService:Create(CreatedToggleInside, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = bruh}):Play()
 				else    
 					Toggled = not Toggled 
 
@@ -434,7 +436,7 @@ function Library:SetupUI(title)
             CreatedSlider.AutoButtonColor = false
             CreatedSlider.Font = Enum.Font.Gotham
             CreatedSlider.Text = ''
-            CreatedSlider.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedSlider.TextColor3 = bruh
             CreatedSlider.TextSize = 17.000
             
             CreatedSliderShape.CornerRadius = UDim.new(0, 4)
@@ -452,7 +454,7 @@ function Library:SetupUI(title)
             CreatedSliderInside.SizeConstraint = Enum.SizeConstraint.RelativeXX
             CreatedSliderInside.Font = Enum.Font.Gotham
             CreatedSliderInside.Text = SliderTitle or 'Slider'
-            CreatedSliderInside.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedSliderInside.TextColor3 = bruh
             CreatedSliderInside.TextSize = 17.000
             CreatedSliderInside.TextWrapped = true
             CreatedSliderInside.TextXAlignment = Enum.TextXAlignment.Left
@@ -470,7 +472,7 @@ function Library:SetupUI(title)
             
             CreatedSliderInner.Name = 'CreatedSliderInner'
             CreatedSliderInner.Parent = CreatedSliderHolder
-            CreatedSliderInner.BackgroundColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedSliderInner.BackgroundColor3 = bruh
             CreatedSliderInner.Size = UDim2.new((DefaultNumber or 0) / MaximumNumber, 0, 0, 10)
             CreatedSliderInner.BorderSizePixel = 0
             
@@ -486,7 +488,7 @@ function Library:SetupUI(title)
             CreatedSliderCount.Size = UDim2.new(0, 20, 0, 14)
             CreatedSliderCount.Font = Enum.Font.Gotham
             CreatedSliderCount.Text = tostring(DefaultNumber and math.floor((DefaultNumber / MaximumNumber) * (MaximumNumber - MinimumNumber) + MinimumNumber) or 0)
-            CreatedSliderCount.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedSliderCount.TextColor3 = bruh
             CreatedSliderCount.TextScaled = true
             CreatedSliderCount.TextSize = 14.000
             CreatedSliderCount.TextWrapped = true
@@ -552,7 +554,7 @@ function Library:SetupUI(title)
 			CreatedDropdown.AutoButtonColor = false
 			CreatedDropdown.Font = Enum.Font.Gotham
 			CreatedDropdown.Text = ''
-			CreatedDropdown.TextColor3 = Color3.fromRGB(255, 0, 127)
+			CreatedDropdown.TextColor3 = bruh
 			CreatedDropdown.TextSize = 17.000
 
 			CreatedDropdownShape.CornerRadius = UDim.new(0, 4)
@@ -567,7 +569,7 @@ function Library:SetupUI(title)
 			DropLabel.Size = UDim2.new(0, 386, 0, 24)
 			DropLabel.Font = Enum.Font.Gotham
 			DropLabel.Text = DropdownTitle or 'Dropdown'
-			DropLabel.TextColor3 = Color3.fromRGB(255, 0, 127)
+			DropLabel.TextColor3 = bruh
 			DropLabel.TextSize = 17.000
 			
 			DropImageLabel.Name = 'DropImageLabel'
@@ -668,7 +670,7 @@ function Library:SetupUI(title)
 				DropdownOption.AutoButtonColor = false
 				DropdownOption.Font = Enum.Font.Gotham
 				DropdownOption.Text = Child
-				DropdownOption.TextColor3 = Color3.fromRGB(255, 0, 127)
+				DropdownOption.TextColor3 = bruh
 				DropdownOption.TextSize = 17.000
 				
 				DropdownOptionCorner.CornerRadius = UDim.new(0, 4)
@@ -723,7 +725,7 @@ function Library:SetupUI(title)
 			CreatedLabel.AutoButtonColor = false
 			CreatedLabel.Font = Enum.Font.Gotham
 			CreatedLabel.Text = ''
-			CreatedLabel.TextColor3 = Color3.fromRGB(255, 0, 127)
+			CreatedLabel.TextColor3 = bruh
 			CreatedLabel.TextSize = 17.000
 			
 			CreatedLabelShape.CornerRadius = UDim.new(0, 4)
@@ -740,7 +742,7 @@ function Library:SetupUI(title)
 			CreatedLabelInside.Size = UDim2.new(0, 393, 0, 30)
 			CreatedLabelInside.SizeConstraint = Enum.SizeConstraint.RelativeXX
 			CreatedLabelInside.Font = Enum.Font.Gotham
-			CreatedLabelInside.TextColor3 = Color3.fromRGB(255, 0, 127)
+			CreatedLabelInside.TextColor3 = bruh
 			CreatedLabelInside.TextSize = 17.000
 			CreatedLabelInside.TextWrapped = true
 			CreatedLabelInside.TextXAlignment = Enum.TextXAlignment.Left
@@ -764,7 +766,7 @@ function Library:SetupUI(title)
             CreatedTextBox.AutoButtonColor = false
             CreatedTextBox.Font = Enum.Font.Gotham
             CreatedTextBox.Text = ''
-            CreatedTextBox.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedTextBox.TextColor3 = bruh
             CreatedTextBox.TextSize = 17.000
             
             CreatedTextBoxShape.CornerRadius = UDim.new(0, 4)
@@ -781,7 +783,7 @@ function Library:SetupUI(title)
             CreatedTextBoxInside.SizeConstraint = Enum.SizeConstraint.RelativeXX
             CreatedTextBoxInside.Font = Enum.Font.Gotham
             CreatedTextBoxInside.Text = TextBoxTitle or 'TextBox'
-            CreatedTextBoxInside.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedTextBoxInside.TextColor3 = bruh
             CreatedTextBoxInside.TextSize = 17.000
             CreatedTextBoxInside.TextWrapped = true
             CreatedTextBoxInside.TextXAlignment = Enum.TextXAlignment.Left
@@ -794,10 +796,10 @@ function Library:SetupUI(title)
             CreatedTextBoxReality.Position = UDim2.new(0.707379162, 0, 0.13333334, 0)
             CreatedTextBoxReality.Size = UDim2.new(0, 106, 0, 20)
             CreatedTextBoxReality.Font = Enum.Font.Gotham
-            CreatedTextBoxReality.PlaceholderColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedTextBoxReality.PlaceholderColor3 = bruh
             CreatedTextBoxReality.PlaceholderText = TextBoxHolder or 'Text here'
             CreatedTextBoxReality.Text = ''
-            CreatedTextBoxReality.TextColor3 = Color3.fromRGB(255, 0, 127)
+            CreatedTextBoxReality.TextColor3 = bruh
             CreatedTextBoxReality.TextSize = 14.000
             CreatedTextBoxReality.TextScaled = true
             
@@ -858,7 +860,7 @@ function Library:SetupUI(title)
 		CreatedNotificationTitle.Size = UDim2.new(0, 200, 0, 27)
 		CreatedNotificationTitle.Font = Enum.Font.Gotham
 		CreatedNotificationTitle.Text = 'Notification'
-		CreatedNotificationTitle.TextColor3 = Color3.fromRGB(255, 0, 127)
+		CreatedNotificationTitle.TextColor3 = bruh
 		CreatedNotificationTitle.TextSize = 25.000
 
 		CreatedNotificationDescription.Name = 'CreatedNotificationDescription'
@@ -868,7 +870,7 @@ function Library:SetupUI(title)
 		CreatedNotificationDescription.Size = UDim2.new(0, 200, 0, 209)
 		CreatedNotificationDescription.Font = Enum.Font.Gotham
 		CreatedNotificationDescription.Text = NotificationDescription
-		CreatedNotificationDescription.TextColor3 = Color3.fromRGB(255, 0, 127)
+		CreatedNotificationDescription.TextColor3 = bruh
 		CreatedNotificationDescription.TextSize = 16.000
 		CreatedNotificationDescription.TextWrapped = true
 
@@ -890,5 +892,4 @@ function Library:SetupUI(title)
     return UIFunctions
 end
 
--- Export
 return Library
