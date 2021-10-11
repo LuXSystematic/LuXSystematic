@@ -8,6 +8,8 @@ elseif game.PlaceId == 7426264451 then
     loadstring(game:HttpGet(''))()
 elseif game.PlaceId == 7082539621 then
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ZeroWareScripts/RobloxScripts/main/animedestroyersimulator.lua'))()
+elseif game.PlaceId == 7429434108 then
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ZeroWareScripts/RobloxScripts/main/animetappers.lua'))()
 else
     v:Kick("Game not supported")
 end
